@@ -1,0 +1,88 @@
+# Copyright 2006 by Sean Luke and George Mason University
+# Licensed under the Academic Free License version 3.0
+# See the file "LICENSE" for more information
+
+parent.0		= /home/xueyi/EclipseWorkSpace/Java/ECJ/src/ec/simple/simple.params
+#print-used-params = true
+
+seed.0 = 679463479
+#567672542
+#898946497
+#884185791
+#588764257
+#679463479
+
+eval = ec.multiobjective.nsga2.NSGA2Evaluator
+eval.problem = search.multiobjective.KillOwnship
+
+stat = ec.multiobjective.MultiObjectiveStatistics
+stat.file = $KillOwnshipStatics.stat
+stat.front =  $front.stat
+stat.do-generation= true
+stat.do-final = true
+stat.do-description = true
+stat.silent.front = false
+
+#stat.num-children = 1
+#stat.child.0 = MyStatistics
+#stat.child.0.file = $MaxOscillationStatics2.csv
+
+generations = 20
+pop.subpop.0.size = 5000
+
+pop.subpop.0.species		= ec.vector.GeneVectorSpecies
+pop.subpop.0.species.ind	= ec.vector.GeneVectorIndividual
+pop.subpop.0.species.gene 	= search.multiobjective.EncounterGene	
+pop.subpop.0.species.gene.ownshipVy = 0
+pop.subpop.0.species.gene.ownshipGs = 5
+pop.subpop.0.species.gene.min_CAPY = -20
+pop.subpop.0.species.gene.max_CAPY = 20
+pop.subpop.0.species.gene.min_CAPR = 0
+pop.subpop.0.species.gene.max_CAPR = 20
+pop.subpop.0.species.gene.min_CAPTheta = -180
+pop.subpop.0.species.gene.max_CAPTheta = 180
+pop.subpop.0.species.gene.min_CAPVy = -2
+pop.subpop.0.species.gene.max_CAPVy = 2
+pop.subpop.0.species.gene.min_CAPGs =2
+pop.subpop.0.species.gene.max_CAPGs = 10
+pop.subpop.0.species.gene.min_CAPBearing = -180
+pop.subpop.0.species.gene.max_CAPBearing=180
+pop.subpop.0.species.gene.min_CAPT = 10
+pop.subpop.0.species.gene.max_CAPT=30
+pop.subpop.0.species.gene.gaussianStd = 0.1
+
+pop.subpop.0.species.fitness = ec.multiobjective.nsga2.NSGA2MultiObjectiveFitness
+pop.subpop.0.species.fitness.num-objectives = 2
+pop.subpop.0.species.fitness.maximize.0 = true
+pop.subpop.0.species.fitness.maximize.1 = true
+pop.subpop.0.species.fitness.min.0 = 0
+pop.subpop.0.species.fitness.max.0 = 1
+pop.subpop.0.species.fitness.min.1 = 0
+pop.subpop.0.species.fitness.max.1 = 1
+	
+
+pop.subpop.0.species.genome-size = uniform
+pop.subpop.0.species.min-initial-size = 1
+pop.subpop.0.species.max-initial-size = 10
+
+breed = ec.multiobjective.nsga2.NSGA2Breeder
+pop.subpop.0.species.pipe = ec.vector.breed.VectorMutationPipeline
+pop.subpop.0.species.pipe.source.0  = search.multiobjective.GeneRemovalPipeline
+pop.subpop.0.species.pipe.source.0.likelihood  = 0.2
+pop.subpop.0.species.pipe.source.0.source.0 = ec.vector.breed.ListCrossoverPipeline
+pop.subpop.0.species.pipe.source.0.source.0.min-child-size =1
+pop.subpop.0.species.pipe.source.0.source.0.source.0 = ec.select.TournamentSelection
+pop.subpop.0.species.pipe.source.0.source.0.source.1 = same
+select.tournament.size = 2
+
+pop.subpop.0.species.crossover-type	= one
+pop.subpop.0.species.crossover-likelihood	= 0.8
+pop.subpop.0.species.mutation-prob	= 0.2
+
+
+
+
+
+
+
+
