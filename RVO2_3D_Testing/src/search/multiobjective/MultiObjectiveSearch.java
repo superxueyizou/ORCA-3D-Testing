@@ -40,7 +40,9 @@ public class MultiObjectiveSearch
 		long startTime = System.currentTimeMillis();
 		EvolutionState evaluatedState=GASearch(child);	
 		long endTime = System.currentTimeMillis();
-		System.out.println("Total search time: "+ (endTime-startTime)/1000+"s");					
+		System.out.println("Total search time: "+ (endTime-startTime)/1000+"s");	
+		System.out.println("Simulation time: "+ KillOwnship.time/1000+"s");
+		System.out.println("real sample points: "+ KillOwnship.count);
 		recur(evaluatedState);		
 	}
 		
@@ -118,7 +120,7 @@ public class MultiObjectiveSearch
         }
         
         int logID=0;
-        String frontIndFile = String.format("frontIndividuals%d.log", 679463479);
+        String frontIndFile = String.format("frontIndividuals%d.log", 8);
         try {
 			logID=state.output.addLog(new File(frontIndFile), true);
 		} catch (IOException e) {

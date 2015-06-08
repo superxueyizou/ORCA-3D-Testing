@@ -11,7 +11,7 @@ public class Encounter {
 	
 	public Encounter(MersenneTwisterFast rdn)
 	{
-		int numGenes = 1+rdn.nextInt(10);
+		int numGenes = 1+rdn.nextInt(maxNumGenes);
 		genes = new EncounterGeneRandom[numGenes];
 		for(int i=0; i<numGenes; ++i)
 		{

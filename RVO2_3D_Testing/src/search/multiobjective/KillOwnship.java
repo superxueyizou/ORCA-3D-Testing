@@ -3,6 +3,7 @@
  */
 package search.multiobjective;
 
+import search.random.RandomSearch;
 import modeling.SAAModel;
 import modeling.SimInitializer;
 import modeling.observer.CollisionDetector;
@@ -27,6 +28,8 @@ public class KillOwnship extends Problem implements SimpleProblemForm
 {
 	private static final long serialVersionUID = 1L;	
 
+	public static long time=0;
+	public static int count=0;
 	/* (non-Javadoc)
 	 * @see ec.simple.SimpleProblemForm#evaluate(ec.EvolutionState, ec.Individual, int, int)
 	 */
@@ -47,17 +50,19 @@ public class KillOwnship extends Problem implements SimpleProblemForm
         
         double[] objectives = ((MultiObjectiveFitness)ind.fitness).getObjectives();
  
+        long startTime = System.currentTimeMillis();
 //*****************************************        
 		SAAModel simState= new SAAModel(785945568, false); 	
 		simState.reset();//reset the simulation. Very important!
     	SimInitializer.generateSimulation(simState, genes);   
 
-    	if(!isProper(simState))
+    	if(!RandomSearch.isProper(simState))
         {
         	 objectives[0]= 0;
              objectives[1]= 0;
              ((MultiObjectiveFitness)ind.fitness).setObjectives(state, objectives);
         	 ind2.evaluated = true;
+        	 time+= (System.currentTimeMillis()-startTime);
         	 return;
         }
 		
@@ -86,7 +91,7 @@ public class KillOwnship extends Problem implements SimpleProblemForm
 			}
 		}	
  
-		simState.finish();
+		simState.finish();		
 //*****************************************
 		int x=state.parameters.getInt(new Parameter("pop.subpop.0.species.max-initial-size"), null);
         objectives[0]= 1.0-(genes.length-1)*1.0/(x-1);
@@ -98,33 +103,13 @@ public class KillOwnship extends Problem implements SimpleProblemForm
     	else
     	{
     		Proximity proximity = ownship.getMinProximity();	
-//    		System.out.println(p);
-//    		System.out.println(proximity);
-//    		System.out.println();
     		objectives[1] = 1.0/(1+ proximity.toValue());
     	}
     	
       
         ((MultiObjectiveFitness)ind.fitness).setObjectives(state, objectives);
         ind2.evaluated = true;
+        time+= (System.currentTimeMillis()-startTime);
+        count++;
 	}
-	
-//****************************************************************************************  	
-
-	public boolean isProper(SAAModel simState)
-	{	
-		UAS ownship = (UAS)simState.uasBag.get(0);
-		UAS uas;
-	    for(int i=1; i<simState.uasBag.size(); ++i)// i=0 to exclude ownship
-		{		    	
-			uas= (UAS)simState.uasBag.get(i);							
-			if(ownship.getLocation().distanceSq(uas.getLocation())<GlobalConfig.PROPERDISTANCE*GlobalConfig.PROPERDISTANCE)
-			{
-				return false;
-			}		
-		}	    
-	       
-		return true;
-	}
-
 }

@@ -40,6 +40,7 @@ public class CollisionDetector extends Entity
 		UAS ownship=(UAS) state.uasBag.get(0);
 		if(ownship.activeState!=0)
 		{
+			dealWithTermination(state);	
 			return;
 		}
 

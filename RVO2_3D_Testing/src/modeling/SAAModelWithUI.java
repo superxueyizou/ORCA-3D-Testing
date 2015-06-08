@@ -204,7 +204,7 @@ public class SAAModelWithUI extends GUIState
     	c.setBounds(0, 50, 340, 300); 
     	c.setAlwaysOnTop(true);
 		c.setVisible(true);		
-		c.setWhenShouldEnd(100);
+//		c.setWhenShouldEnd(100);
 		
 		SAAConfigurator configurator = new SAAConfigurator(saaModelWithUI.state, saaModelWithUI);
 		configurator.setBounds(0, 380, 340,650); 
@@ -223,7 +223,7 @@ public class SAAModelWithUI extends GUIState
     	c.setBounds(0, 50, 340, 300); 
     	c.setAlwaysOnTop(true);
 		c.setVisible(true);		
-		c.setWhenShouldEnd(100);
+//		c.setWhenShouldEnd(100);
 		
 		SAAConfigurator configurator = new SAAConfigurator(saaModelWithUI.state, saaModelWithUI);
 		configurator.setBounds(0, 380, 340,650); 

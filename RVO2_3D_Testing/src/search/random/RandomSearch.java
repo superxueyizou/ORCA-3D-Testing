@@ -2,6 +2,7 @@ package search.random;
 
 import java.io.IOException;
 
+import search.multiobjective.KillOwnship;
 import modeling.SAAModel;
 import modeling.SimInitializer;
 import modeling.observer.CollisionDetector;
@@ -12,16 +13,20 @@ import ec.util.MersenneTwisterFast;
 
 public class RandomSearch {	
 	
+	public static long time=0;
+	public static int count=0;
+	
 	public static void evaluate(Encounter encounter)
 	{		
+		long time1 = System.currentTimeMillis();
 		SAAModel simState= new SAAModel(785945568, false); 	
 		simState.reset();//reset the simulation. Very important!
     	SimInitializer.generateSimulation(simState, encounter.genes);   
-//    	System.out.println(encounter);
     	if(!isProper(simState))
         {
         	 encounter.objectives[0]= 0;
         	 encounter.objectives[1]= 0;
+        	 time+= (System.currentTimeMillis()-time1);
         	 return;
         }
 		
@@ -51,7 +56,8 @@ public class RandomSearch {
     	}
 		
 		simState.finish();
-	  
+		time+= (System.currentTimeMillis()-time1);	
+		count++;
 	}
 	
 
@@ -85,6 +91,7 @@ public class RandomSearch {
 		do
 		{			
 			Encounter encounter=new Encounter(rdn);
+	    	System.out.println(encounter);
 			evaluate(encounter);
 			if(encounter.objectives[1]==1.0)
 			{
@@ -96,6 +103,8 @@ public class RandomSearch {
 		} while(sampleCount<numSamplePoints);//while(requiredEncounterCount<targetNumEncounters);
 		long endTime = System.currentTimeMillis();
 		System.out.println("Total search time: "+ (endTime-startTime)/1000+"s");
+		System.out.println("Simulation time: "+ time/1000+"s");
+		System.out.println("real sample points: "+ count);
 		System.out.println(requiredEncounterCount+" required encounters were found.");
 	}
 
