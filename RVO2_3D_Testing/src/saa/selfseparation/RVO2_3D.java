@@ -3,11 +3,11 @@
  */
 package saa.selfseparation;
 
+import orca.RVO2;
 import configuration.Configuration;
 import modeling.SAAModel;
 import modeling.observer.CollisionDetector;
 import modeling.uas.UAS;
-import rvo2.RVO2;
 import sim.engine.SimState;
 import sim.util.Double3D;
 
