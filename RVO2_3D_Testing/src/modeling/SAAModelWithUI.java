@@ -68,7 +68,6 @@ public class SAAModelWithUI extends GUIState
 		//adding the different layers to the display3D
         display3D.attach(environment3DPortrayal, "Environment3D" );
         display3D.attach(wireFrameP, "WireFrame");
-
         
         uasPortrayal = new SpherePortrayal3D(Color.CYAN, 10, 10)
         {
@@ -76,6 +75,7 @@ public class SAAModelWithUI extends GUIState
 			{
 				Color3f col;
 				UAS uas = (UAS)obj;
+								
 				if(uas.activeState==-1)
 				{
 					col=new Color3f(255,0,0);		
@@ -83,10 +83,19 @@ public class SAAModelWithUI extends GUIState
 				else if(uas.activeState==1)
 				{
 					col=new Color3f(96,96,96);	
+					if(uas.getAlias()=="ownship")
+					{
+						col=new Color3f(255,255,0);		
+					}
+					
 				}
 				else
 				{
 					col=new Color3f(0,255,255);	
+					if(uas.getAlias()=="ownship")
+					{
+						col=new Color3f(255,255,0);		
+					}
 				}					
 
 				//Create the coloring attributes
